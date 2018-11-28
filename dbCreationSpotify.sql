@@ -6,7 +6,7 @@ firstname VARCHAR(50),
 surname VARCHAR(50),
 birth_date DATE,
 death_date DATE,
-country VARCHAR(50) NOT NULL
+country VARCHAR(50)
 );
 
 DROP TABLE IF EXISTS band CASCADE;
