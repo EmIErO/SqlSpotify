@@ -1,29 +1,41 @@
-package csvConventer;
+package bandGenerator.bandModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Album {
 
-    private int id;
+    private static List<Album> albumList = new ArrayList<>();
+    private static int countAlbum = 0;
+    private int id = 0;
     private String name;
     private String genre;
-    private String releaseYear;
+    private Integer releaseYear;
     private List<Song> songList = new ArrayList<>();
 
-    public int getId() {
-        return id;
-    }
+    private int bandId;
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public Album(int id, String name, String genre, String releaseYear) {
-        this.id = id;
+    public Album(String name, String genre, Integer releaseYear, int bandId) {
+        countAlbum++;
         this.name = name;
         this.genre = genre;
         this.releaseYear = releaseYear;
+        this.bandId = bandId;
+        id = countAlbum;
+        albumList.add(this);
+    }
+
+    public int getBandId() {
+        return bandId;
+    }
+
+    public static List<Album> getAlbumList() {
+        return albumList;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -42,11 +54,11 @@ public class Album {
         this.genre = genre;
     }
 
-    public String getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(String releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 
@@ -58,7 +70,7 @@ public class Album {
         this.songList = songList;
     }
 
-    public void addSong(Song song){
+    public void addSong(Song song) {
         songList.add(song);
     }
 }
