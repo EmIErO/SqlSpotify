@@ -4,6 +4,7 @@ import bandGenerator.bandModel.Album;
 import bandGenerator.bandModel.Band;
 import bandGenerator.bandModel.Song;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -13,7 +14,7 @@ public class BandGenerator {
     private List<String> data;
 
     private final int bandNameIndex = 0;
-    private final int albumNameIndex = 3;
+    private final int albumNameIndex = 2;
     private final int albumYearRealiseIndex = 6;
 
     public void generate(List<String> data) {
@@ -22,8 +23,6 @@ public class BandGenerator {
         for (String part : data) {
             partsOfData = part.split(",");
             if (partsOfData.length > 7) partsOfData = resizeArray(partsOfData);
-
-            System.out.println(Arrays.toString(partsOfData));
 
             Band band = getBandByName(partsOfData[bandNameIndex]);
             if (band == null) {
@@ -35,7 +34,7 @@ public class BandGenerator {
 
             Song song = songGenerate(partsOfData, album.getId());
             album.addSong(song);
-
+            band.addAlbum(album);
         }
 
     }
@@ -46,6 +45,7 @@ public class BandGenerator {
             newData[i] = data[i];
             newData[newData.length - i - 1] = data[data.length - i - 1];
         }
+        newData[3] = data[3];
         return newData;
     }
 
@@ -76,13 +76,12 @@ public class BandGenerator {
         } else {
             releaseYear = Integer.parseInt(partsOfData[albumYearRealiseIndex]);
         }
-
+        if(albumName.equals("Not available")) albumName = "";
 
         return new Album(albumName, genre, releaseYear, bandId);
     }
 
     private Album getAlbumByName(String albumName, List<Album> albums) {
-
         for (Album album : albums) {
             if (album.getName().equals(albumName)) return album;
         }
@@ -97,29 +96,49 @@ public class BandGenerator {
     }
 
     private Band bandGenerate(String[] partsOfData) {
-        int countryIndex = 2;
+        int countryIndex = 3;
 
         String bandName = partsOfData[bandNameIndex];
         String country = (partsOfData[countryIndex].equals("Not available")) ? ("") : partsOfData[countryIndex]; //because we dont want not avaible in database
         int randomStartYear = getRandomStartYearBasingOnSongRelease(partsOfData[albumYearRealiseIndex]);
         int randomEndYear = getRandomEndYearBasingOnSongRelease(partsOfData[albumYearRealiseIndex], randomStartYear);
+        System.out.println(randomStartYear + "  "  + randomEndYear);
 
         return new Band(bandName, country, randomStartYear, randomEndYear);
     }
 
     private int getRandomStartYearBasingOnSongRelease(String songReleaseYear) {
+        int songYear = Integer.parseInt(songReleaseYear);
+        int max = songYear + 30;
+        int min = songYear - 20;
+        int startDate = ThreadLocalRandom.current().nextInt(min, max);
+
         if (songReleaseYear.equals("0") || songReleaseYear.equals("year")) {
             return ThreadLocalRandom.current().nextInt(1948, 2018);
         }
-        return ThreadLocalRandom.current().nextInt(Integer.parseInt(songReleaseYear) - 20, Integer.parseInt(songReleaseYear + 30));
+
+        if(max > 2018) max = 2018;
+        if(min > 2018) min = 2010;
+
+        while (startDate > songYear){
+            startDate = ThreadLocalRandom.current().nextInt(min, max);
+        }
+
+        return startDate;
     }
 
     private int getRandomEndYearBasingOnSongRelease(String songReleaseDate, int startYearBand) {
+
+        int max = startYearBand + 50;
+        if(max > 2018) max = 2018;
+
         if (songReleaseDate.equals("0") || songReleaseDate.equals("year")) {
-            return ThreadLocalRandom.current().nextInt(startYearBand, startYearBand + 50);
+            return ThreadLocalRandom.current().nextInt(startYearBand, max);
         }
-        int endOfRange = (Integer.parseInt(songReleaseDate) - startYearBand);
-        return ThreadLocalRandom.current().nextInt(Integer.parseInt(songReleaseDate), Integer.parseInt(songReleaseDate) - endOfRange);
+
+        int endOfRange = (Integer.parseInt(songReleaseDate) + 30);
+        if (endOfRange > 2018) endOfRange = 2018;
+        return ThreadLocalRandom.current().nextInt(Integer.parseInt(songReleaseDate), endOfRange);
     }
 
     public static double round(double number, int scale) {
