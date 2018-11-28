@@ -1,4 +1,6 @@
-package csvConventer;
+package bandGenerator.csvConventer;
+
+import bandGenerator.CreateTables;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +14,7 @@ public class CSVParser {
 
         List<String> musicData = new ArrayList<>();
 
-        Scanner scanner = new Scanner(new File(Conventer.class.getClassLoader().getResource(fileName).getFile()));
+        Scanner scanner = new Scanner(new File(CreateTables.class.getClassLoader().getResource(fileName).getFile()));
 
         while (scanner.hasNext()){
             musicData.add(scanner.nextLine());
