@@ -1,10 +1,13 @@
-import csvConventer.Conventer;
+import bandGenerator.CreateTables;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+
+//mock data can be download from moccarro
+
 
 public class MergeCsvFiles {
 
@@ -16,7 +19,7 @@ public class MergeCsvFiles {
         for (int i = 1; i <= 12; i++) {
             String fileName = "MOCK_DATA(" + i + ").csv";
 
-            Scanner scanner = new Scanner(new File(Conventer.class.getClassLoader().getResource(fileName).getFile()));
+            Scanner scanner = new Scanner(new File(CreateTables.class.getClassLoader().getResource(fileName).getFile()));
 
             while ((scanner.hasNext())) {
                 String line = scanner.nextLine();
