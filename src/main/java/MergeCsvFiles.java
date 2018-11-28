@@ -1,31 +1,30 @@
-import java.io.*;
-import java.util.ArrayList;
+import csvConventer.Conventer;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class MergeCsvFiles {
 
     public static void main(String[] args) throws IOException {
-        String firstFile = "/home/riczard/projects/codecool/tw_projects/sqlSpotify/src/main/resources/artistTable.csv";
+        String firstFile = "artistTable.csv";
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(firstFile, true));
 
-        String fileToAdd = "MOCK_DATA";
+        for (int i = 1; i <= 12; i++) {
+            String fileName = "MOCK_DATA(" + i + ").csv";
 
-        for(int i = 1; i <= 10 ; i++) {
-            String fileName = "/home/riczard/projects/codecool/tw_projects/sqlSpotify/src/main/resources/MOCK_DATA(" + i + ").csv";
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            Scanner scanner = new Scanner(new File(Conventer.class.getClassLoader().getResource(fileName).getFile()));
 
-            String line = null;
-            String[] firstLine = null;
-            if ((line = reader.readLine()) != null)
-                firstLine = line.split(",");
-
-
-            while ((line = reader.readLine()) != null) {
+            while ((scanner.hasNext())) {
+                String line = scanner.nextLine();
                 writer.write(line);
-                writer.newLine();
+                writer.write("\n");
             }
 
-            reader.close();
+            scanner.close();
         }
         writer.close();
     }

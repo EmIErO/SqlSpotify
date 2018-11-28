@@ -15,7 +15,7 @@ public class CsvParser {
         CsvParser parser = new CsvParser();
 
         try (
-                Reader reader = Files.newBufferedReader(Paths.get("/home/riczard/projects/codecool/tw_projects/sqlSpotify/src/main/resources/music.csv"));
+                Reader reader = Files.newBufferedReader(Paths.get("/home/riczard/projects/codecool/tw_projects/sqlSpotify/src/main/resources/music.csvGenerated"));
                 CSVReader csvReader = new CSVReader(reader);
         ) {
             // Reading Records One by One in a String array

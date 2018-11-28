@@ -18,7 +18,7 @@ public class BandCreator {
         CsvParser parser = new CsvParser();
 
         try (
-                Reader reader = Files.newBufferedReader(Paths.get("/home/riczard/projects/codecool/tw_projects/sqlSpotify/src/main/resources/bands.csv"));
+                Reader reader = Files.newBufferedReader(Paths.get("/home/riczard/projects/codecool/tw_projects/sqlSpotify/src/main/resources/bands.csvGenerated"));
                 CSVReader csvReader = new CSVReader(reader);
         ) {
             // Reading Records One by One in a String array
@@ -43,7 +43,7 @@ public class BandCreator {
     }
 
     public void createCsv (List<List<String>> data) throws IOException{
-        PrintWriter pw = new PrintWriter(new File("bandsDB.csv"));
+        PrintWriter pw = new PrintWriter(new File("bandsDB.csvGenerated"));
         for(List<String> line : data){
             StringBuilder sb = new StringBuilder();
             for(String information : line){
