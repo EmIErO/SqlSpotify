@@ -14,7 +14,11 @@ public class BandGenerator {
     private List<String> data;
 
     private final int bandNameIndex = 0;
+    private final int songLengthIndex = 1;
+    private final int countryIndex = 2;
     private final int albumNameIndex = 3;
+    private final int genreNameIndex = 4;
+    private final int songNameIndex = 5;
     private final int albumYearRealiseIndex = 6;
 
     public void generate(List<String> data) {
@@ -41,17 +45,18 @@ public class BandGenerator {
 
     private String[] resizeArray(String[] data) {
         String[] newData = new String[7];
-        for (int i = 0; i < 3; i++) {
-            newData[i] = data[i];
-            newData[newData.length - i - 1] = data[data.length - i - 1];
-        }
-        newData[3] = data[3];
+        newData[bandNameIndex] = data[bandNameIndex];
+        newData[songLengthIndex] = data[songLengthIndex];
+        newData[countryIndex] = data[countryIndex];
+        newData[albumNameIndex] = data[data.length - 4];
+        newData[genreNameIndex] = data[data.length - 3];
+        newData[songNameIndex] = data[data.length - 2];
+        newData[albumYearRealiseIndex] = data[data.length - 1];
+
         return newData;
     }
 
     private Song songGenerate(String[] partsOfData, int albumId) {
-        int songNameIndex = 5;
-        int songLengthIndex = 1;
         double songLength;
         String title = partsOfData[songNameIndex];
         if (partsOfData[songLengthIndex].equals("duration")) {
@@ -65,7 +70,6 @@ public class BandGenerator {
     }
 
     private Album albumGenerate(String[] partsOfData, int bandId) {
-        int genreNameIndex = 4;
         Integer releaseYear;
 
         String albumName = partsOfData[albumNameIndex];
@@ -97,7 +101,6 @@ public class BandGenerator {
     }
 
     private Band bandGenerate(String[] partsOfData) {
-        int countryIndex = 2;
 
         String bandName = partsOfData[bandNameIndex];
         String country = (partsOfData[countryIndex].equals("Not available")) ? ("") : partsOfData[countryIndex]; //because we dont want not avaible in database
