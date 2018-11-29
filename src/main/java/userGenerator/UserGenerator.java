@@ -24,9 +24,9 @@ public class UserGenerator {
         StringBuilder sb = new StringBuilder();
 
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i <500000; i++) {
+        for (int i = 0; i < 500000; i++) {
             sb.append(getUniqueLogin()).append(",");
-            sb.append(getPassword()).append(",");
+            sb.append(mock.passwords().valStr()).append(",");
             String firstName = mock.names().first().val();
             sb.append(firstName).append(",");
             sb.append(mock.names().last().val()).append(",");
@@ -38,16 +38,18 @@ public class UserGenerator {
         pw.write(sb.toString());
         pw.close();
         long endTime = System.currentTimeMillis();
+
         System.out.println("Total execution time: " + (endTime - startTime) + "ms");
         System.out.println("Repeat mails: " + countRepeatMail);
         System.out.println("Repeat logins: " + countRepeatLogin);
     }
 
-    private String getGenderByFirstName(String name){
+    private String getGenderByFirstName(String name) {
         int lastLetterIndex = name.length() - 1;
-        if(name.substring(lastLetterIndex).equals("a")) {
+        if (name.substring(lastLetterIndex).equals("a")) {
             return "female";
-        }return "male";
+        }
+        return "male";
     }
 
     private String generateUniqueMail() {
@@ -92,31 +94,5 @@ public class UserGenerator {
             return ThreadLocalRandom.current().nextInt(97, 122 + 1);
         }
         return ThreadLocalRandom.current().nextInt(48, 57 + 1);
-    }
-
-
-    private String getPassword() {
-        int randomPasswordLength = ThreadLocalRandom.current().nextInt(6, 33 + 1);
-        return generatePassword(randomPasswordLength);
-    }
-
-    private String generatePassword(int loginLength) {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 1; i < loginLength; i++) {
-            char randomChar = getPasswordPermittedChar();
-            sb.append(randomChar);
-        }
-        return sb.toString();
-    }
-
-    private char getPasswordPermittedChar() {
-        int randomPasswordCharIndex = ThreadLocalRandom.current().nextInt(48, 122 + 1);
-        char randomChar = (char) randomPasswordCharIndex;
-        while (randomChar == ':' || randomChar == ';' || randomChar == ',') {
-            randomPasswordCharIndex = ThreadLocalRandom.current().nextInt(48, 122 + 1);
-            randomChar = (char) randomPasswordCharIndex;
-        }
-        return randomChar;
     }
 }
