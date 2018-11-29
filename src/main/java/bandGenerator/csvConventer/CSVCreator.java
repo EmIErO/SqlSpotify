@@ -45,10 +45,14 @@ public class CSVCreator {
         StringBuilder sb = new StringBuilder();
 
         for (Album album : Album.getAlbumList()) {
-            sb.append(album.getId()).append(",");
             sb.append(album.getName()).append(",");
             sb.append(album.getGenre()).append(",");
-            sb.append(album.getReleaseYear()).append(",");
+
+            if(album.getReleaseYear() == null){
+                sb.append(",");
+            }else{
+                sb.append(album.getReleaseYear()).append(",");
+            }
             sb.append(album.getBandId()).append("\n");
         }
         sb.setLength(sb.length() - 1);
@@ -61,7 +65,6 @@ public class CSVCreator {
         StringBuilder sb = new StringBuilder();
 
         for (Song song : Song.getSongList()) {
-            sb.append(song.getId()).append(",");
             sb.append(song.getTitle()).append(",");
             sb.append(song.getLength()).append("\n");
         }
@@ -74,9 +77,13 @@ public class CSVCreator {
         PrintWriter pw = new PrintWriter(new File("song_album.csv"));
         StringBuilder sb = new StringBuilder();
 
-        for (Song song : Song.getSongList()) {
-            sb.append(song.getId()).append(",");
-            sb.append(song.getAlbumId()).append("\n");
+        for(Album album : Album.getAlbumList()){
+
+            for(Song song: album.getSongList()){
+                sb.append(song.getId()).append(",");
+                sb.append(song.getAlbumId()).append(",");
+                sb.append(album.getSongList().indexOf(song) + 1).append("\n");
+            }
         }
         sb.setLength(sb.length() - 1);
         pw.write(sb.toString());
