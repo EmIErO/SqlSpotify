@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS artist_band CASCADE;
 CREATE TABLE artist_band
 (id_artist INTEGER REFERENCES artist (id_artist),
 id_band INTEGER REFERENCES band (id_band),
-join_date INTEGER
+join_date DATE
 );
 
 DROP TABLE IF EXISTS album CASCADE;
