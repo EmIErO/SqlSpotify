@@ -27,7 +27,7 @@ join_date DATE
 DROP TABLE IF EXISTS album CASCADE;
 CREATE TABLE album
 (id_album SERIAL PRIMARY KEY,
-name VARCHAR(200),
+name VARCHAR(300),
 genre VARCHAR(50),
 release_date INTEGER,
 id_band INTEGER REFERENCES band (id_band)
@@ -36,7 +36,7 @@ id_band INTEGER REFERENCES band (id_band)
 DROP TABLE IF EXISTS song CASCADE ;
 CREATE TABLE song
 (id_song SERIAL PRIMARY KEY,
-title VARCHAR(200),
+title VARCHAR(300),
 length numeric (6,2)
 );
 
