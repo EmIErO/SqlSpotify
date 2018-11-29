@@ -1,6 +1,5 @@
 package bandGenerator;
 
-import bandGenerator.BandGenerator;
 import bandGenerator.csvConventer.CSVCreator;
 import bandGenerator.csvConventer.CSVParser;
 

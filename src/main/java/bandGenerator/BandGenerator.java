@@ -14,7 +14,7 @@ public class BandGenerator {
     private List<String> data;
 
     private final int bandNameIndex = 0;
-    private final int albumNameIndex = 2;
+    private final int albumNameIndex = 3;
     private final int albumYearRealiseIndex = 6;
 
     public void generate(List<String> data) {
@@ -77,6 +77,7 @@ public class BandGenerator {
             releaseYear = Integer.parseInt(partsOfData[albumYearRealiseIndex]);
         }
         if(albumName.equals("Not available")) albumName = "";
+        if(albumName.charAt(0) == ' ') albumName = albumName.substring(1);
 
         return new Album(albumName, genre, releaseYear, bandId);
     }
@@ -96,7 +97,7 @@ public class BandGenerator {
     }
 
     private Band bandGenerate(String[] partsOfData) {
-        int countryIndex = 3;
+        int countryIndex = 2;
 
         String bandName = partsOfData[bandNameIndex];
         String country = (partsOfData[countryIndex].equals("Not available")) ? ("") : partsOfData[countryIndex]; //because we dont want not avaible in database
@@ -108,14 +109,14 @@ public class BandGenerator {
     }
 
     private int getRandomStartYearBasingOnSongRelease(String songReleaseYear) {
+        if (songReleaseYear.equals("0") || songReleaseYear.equals("year")) {
+            return ThreadLocalRandom.current().nextInt(1948, 2018);
+        }
+
         int songYear = Integer.parseInt(songReleaseYear);
         int max = songYear + 30;
         int min = songYear - 20;
         int startDate = ThreadLocalRandom.current().nextInt(min, max);
-
-        if (songReleaseYear.equals("0") || songReleaseYear.equals("year")) {
-            return ThreadLocalRandom.current().nextInt(1948, 2018);
-        }
 
         if(max > 2018) max = 2018;
         if(min > 2018) min = 2010;
