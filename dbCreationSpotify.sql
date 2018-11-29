@@ -11,7 +11,7 @@ country VARCHAR(50)
 DROP TABLE IF EXISTS band CASCADE;
 CREATE TABLE band
 (id_band SERIAL PRIMARY KEY,
-name VARCHAR(50),
+name VARCHAR(300),
 country VARCHAR(50),
 start_date INTEGER,
 end_date INTEGER
@@ -36,8 +36,8 @@ id_band INTEGER REFERENCES band (id_band)
 DROP TABLE IF EXISTS song CASCADE ;
 CREATE TABLE song
 (id_song SERIAL PRIMARY KEY,
-title VARCHAR(80),
-length decimal(4,2)
+title VARCHAR(300),
+length decimal(6,2)
 );
 
 DROP TABLE IF EXISTS song_album CASCADE;
