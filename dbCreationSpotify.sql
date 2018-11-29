@@ -33,10 +33,10 @@ release_date INTEGER,
 id_band INTEGER REFERENCES band (id_band)
 );
 
-DROP TABLE IF EXISTS song CASCADE;
+DROP TABLE IF EXISTS song CASCADE ;
 CREATE TABLE song
 (id_song SERIAL PRIMARY KEY,
-title VARCHAR(50),
+title VARCHAR(80),
 length decimal(4,2)
 );
 
