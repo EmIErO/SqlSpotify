@@ -1,11 +1,10 @@
-
 DROP TABLE IF EXISTS artist CASCADE;
 CREATE TABLE artist
 (id_artist SERIAL PRIMARY KEY,
 firstname VARCHAR(50),
 surname VARCHAR(50),
-birth_date DATE,
-death_date DATE,
+birth_date date,
+death_date date,
 country VARCHAR(50)
 );
 
@@ -14,15 +13,15 @@ CREATE TABLE band
 (id_band SERIAL PRIMARY KEY,
 name VARCHAR(50),
 country VARCHAR(50),
-start_date DATE,
-end_date DATE
+start_date INTEGER,
+end_date INTEGER
 );
 
 DROP TABLE IF EXISTS artist_band CASCADE;
 CREATE TABLE artist_band
 (id_artist INTEGER REFERENCES artist (id_artist),
 id_band INTEGER REFERENCES band (id_band),
-join_date DATE
+join_date INTEGER
 );
 
 DROP TABLE IF EXISTS album CASCADE;
@@ -30,15 +29,15 @@ CREATE TABLE album
 (id_album SERIAL PRIMARY KEY,
 name VARCHAR(50),
 genre VARCHAR(50),
-release_date DATE,
+release_date INTEGER,
 id_band INTEGER REFERENCES band (id_band)
 );
 
-DROP TABLE IF EXISTS song CASCADE;
+DROP TABLE IF EXISTS song CASCADE ;
 CREATE TABLE song
 (id_song SERIAL PRIMARY KEY,
-title VARCHAR(50),
-length TIME
+title VARCHAR(80),
+length decimal(4,2)
 );
 
 DROP TABLE IF EXISTS song_album CASCADE;
