@@ -32,6 +32,4 @@ VALUES
 SELECT playlist_gen(100);
 SELECT playlist_song_gen();
 SELECT artist_band_gen();
-
--- Miraaaaaaaaaaaaaaaaaaaaaa function inserting to db account_subscription_gen()
-
+SELECT account_subscription_gen();

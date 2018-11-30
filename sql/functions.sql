@@ -1,11 +1,21 @@
 --functions to generate data for table account_subscription
 
-INSERT INTO account_subscription (id_account, id_subscription, start_date)
-SELECT id_account,
-       random_subscription(),
-       random_date('2018-01-01', '2018-11-29')
-FROM account
-WHERE id_account % 7 > 3 AND firstname LIKE '%a%';
+CREATE OR REPLACE FUNCTION account_subscription_gen() RETURNS void AS $$
+DECLARE rec RECORD;
+
+BEGIN
+ FOR rec IN SELECT * FROM account
+ LOOP
+    INSERT INTO account_subscription (id_account, id_subscription, start_date)
+    SELECT rec.id_account,
+           random_subscription(),
+           random_date('2018-01-01', '2018-11-29')
+
+    WHERE rec.id_account % 7 > 3 AND rec.firstname LIKE '%a%';
+ END LOOP;
+END ;
+$$ LANGUAGE 'plpgsql';
+
 
 CREATE OR REPLACE FUNCTION random_date (fromDate DATE, toDate DATE) RETURNS DATE  AS $$
 DECLARE
@@ -58,8 +68,6 @@ BEGIN
 END;$$
 
 LANGUAGE  'plpgsql';
-
-SELECT artist_band_gen();
 
 
 CREATE OR REPLACE FUNCTION random_artist() RETURNS INT AS $$
