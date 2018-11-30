@@ -34,6 +34,8 @@ DECLARE
  END;
 $$ LANGUAGE  'plpgsql';
 
+
+
 CREATE VIEW invalidSubscription AS
     SELECT a.firstname || ' ' || a.surname AS fullName,
            asub.start_date AS startDate,
@@ -47,6 +49,7 @@ ORDER BY endDate DESC;
 
 
 SELECT * FROM invalidSubscription;
+
 DROP VIEW invalidSubscription;
 
 
