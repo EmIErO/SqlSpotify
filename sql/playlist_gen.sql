@@ -25,3 +25,5 @@ BEGIN
 END;$$
 
 LANGUAGE 'plpgsql';
+
+SELECT playlist_gen(100);
